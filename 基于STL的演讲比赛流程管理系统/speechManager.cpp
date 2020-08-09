@@ -145,6 +145,37 @@ void speechManager::speechContest() {
 
 }
 
+void speechManager::showScore() {
+	cout << "---------第" << this->mIndex << "轮晋级选手信息如下：-----------" << endl;
+	vector<int> v;
+	if (this->mIndex == 1) {
+		v = v2;
+	}
+	else {
+		v = vVictory;
+	}
+	for (vector<int>::iterator it = v.begin(); it != v.end(); ++it) {
+		cout << "选手编号：" << *it << " 姓名： " << mSpeaker[*it].mName << " 得分： " << mSpeaker[*it].mScore[this->mIndex - 1] << endl;
+	}
+	cout << endl;
+	system("pause");
+	system("cls");
+}
+
+void speechManager::saveRecord() {
+	ofstream ofs;
+	ofs.open("speech.csv", ios::out | ios::app);
+
+	for (vector<int>::iterator it = vVictory.begin(); it != vVictory.end(); ++it) {
+		ofs << *it << ", " << mSpeaker[*it].mScore[1] << ", ";
+	}
+	ofs << endl;
+
+	ofs.close();
+
+	cout << "记录已保存" << endl;
+}
+
 void speechManager::startSpeech() {
 	// 第一轮
 	
@@ -153,14 +184,19 @@ void speechManager::startSpeech() {
 	// 比赛
 	speechContest();
 	// 显示晋级结果
-
+	showScore();
 	// 第二轮比赛
-
+	this->mIndex++;
 	// 抽签
-
+	speechDraw();
 	// 比赛
-
+	speechContest();
 	// 显示最终分数
-
+	showScore();
 	// 保存分数
+	saveRecord();
+
+	cout << "本届比赛完毕！" << endl;
+	system("pause");
+	system("cls");
 }

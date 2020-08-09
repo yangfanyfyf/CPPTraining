@@ -6,6 +6,7 @@
 #include <numeric>
 #include <string >
 #include <algorithm>
+#include <fstream>
 #include "speaker.h"
 
 using namespace std;
@@ -29,6 +30,10 @@ public:
 	void speechDraw();
 
 	void speechContest();
+
+	void showScore();
+
+	void saveRecord();
 
 	vector<int> v1;
 	vector<int> v2;
