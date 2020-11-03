@@ -1,2 +1,0 @@
-C:\Users\yangf\OneDrive\Desktop\C++\基于STL的演讲比赛流程管理系统\Debug\基于STL的演讲比赛流程管理系统.exe
-C:\Users\yangf\OneDrive\Desktop\C++\基于STL的演讲比赛流程管理系统\Debug\基于STL的演讲比赛流程管理系统.pdb
