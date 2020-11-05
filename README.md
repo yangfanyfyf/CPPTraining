@@ -1,4 +1,4 @@
 # CPPTraining
-just a C++ training
+just C++ training
 
  `^_^`
