@@ -7,7 +7,7 @@
 
 #include "dijkstra.h"
 
-Graph::Graph(int vertices, int edge){
+Graph::Graph(int vertices, int edge){ // 初始化地图
     verticesNum = vertices;
     edgeNum = edge;
     //arc = new int*[this->verticesNum];
@@ -40,7 +40,7 @@ Graph::~Graph(){
 //    delete arc;
 }
 
-bool Graph::check_edge_value(int start, int end, int weight){
+bool Graph::check_edge_value(int start, int end, int weight){ // 保证输入合理
     if (start < 1 || end < 1 || start > verticesNum || end > verticesNum || weight < 0){
         return false;
     }
@@ -63,7 +63,8 @@ void Graph::createGraph(){
             cout << "非法输入，请重新输入！" << endl;
             cin >> start >> end >> weight;
         }
-        arc[start - 1][end - 1] = weight;
+        
+        arc[start - 1][end - 1] = weight; // 修改地图
         
         ++count;
         
@@ -74,7 +75,7 @@ void Graph::printGraph(){
     cout << "图的邻接矩阵是：" << endl;
     int count_row = 0;
     int count_col = 0;
-    while (count_row != this->verticesNum){
+    while (count_row != this->verticesNum){ // 打印完一行后换行
         count_col = 0;
         while (count_col != this->verticesNum) {
             if (arc[count_row][count_col] == INT_MAX){
@@ -91,32 +92,34 @@ void Graph::printGraph(){
 }
 
 void Graph::dijkstra(int begin){
+    //初始化
     for (int i = 0; i != this->verticesNum; ++i){
         dis[i].path = "v" + to_string(begin) + "-->" + to_string(i + 1);
         dis[i].value = arc[begin - 1][i];
     }
-    
-    dis[begin - 1].value = 0;
+    dis[begin - 1].value = 0;// 存储到每个点的最短距离
     dis[begin - 1].visit = true;
     
+    // 选出离起点最短的点
     int count = 1;
-    while (count != this->verticesNum){
+    while (count != this->verticesNum){ // 遍历所有的点
         int temp = 0;
         int min = INT_MAX;
         for (int i = 0; i != this->verticesNum; ++i){
+            // 未访问过，离begin最近的点
             if (!dis[i].visit && dis[i].value < min){
                 min = dis[i].value;
                 temp = i;
             }
         }
-        dis[temp].visit = true;
+        dis[temp].visit = true; // 下一次就会从第二小的开始
         ++count;
         
-        
+        // 以这个点为中继更新所有的点
         for (int i = 0; i != this->verticesNum; ++i){
             if (!dis[i].visit && arc[temp][i] != INT_MAX && (dis[temp].value + arc[temp][i]) < dis[i].value){
-                dis[i].value = dis[temp].value + arc[temp][i];
-                dis[i].path = dis[temp].path + "-->" + to_string(i + 1);
+                dis[i].value = dis[temp].value + arc[temp][i];//新的距离
+                dis[i].path = dis[temp].path + "-->" + to_string(i + 1); //到达temp的新路径
             }
         }
     }
